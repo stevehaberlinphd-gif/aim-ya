@@ -490,7 +490,7 @@ function renderHome(){
       h("p",{class:"question"},"What does it mean to be a thoughtful, present human in an AI-saturated world?"),
       introVideo(),
       h("h2",{class:"glance-h"},"Program at a Glance"),
-      h("div",{class:"path"},[1,2,3,4].map(n=>{
+      h("div",{class:"path"},firstStep(),[1,2,3,4].map(n=>{
         const w=WEEKS[n], current=n===next;
         const card=h("div",{class:"wk"+(weekDone(n)?" done":weekStarted(n)||current?" started":"")+(current?" current":""),role:"button",tabindex:"0",
             "aria-label":`Week ${n}: ${w.title}`,onclick:()=>openWeek(n),onkeydown:e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openWeek(n);}}},
@@ -508,11 +508,29 @@ function renderHome(){
 /* Final step on the path: post-program questionnaires (Qualtrics) */
 /* TESTING ONLY: true shows the post-survey button before Week 4 is finished. Set to false before students use the app. */
 const TEST_POST=false;
+/* First card on the home page: the research pre-survey, shown until it's done (also for anyone who skipped it at first). */
+function firstStep(){
+  if(!USE_QUALTRICS) return null;
+  const R=S.research, done=!!R.preDone;
+  let body;
+  if(done) body=h("p",{class:"muted",style:"font-size:.92rem"},"Completed. Thank you for taking part in the study.");
+  else{
+    const pid=h("input",{type:"text",id:"h-pid",placeholder:"e.g., AIM-0427",autocomplete:"off"}); pid.value=R.pid||"";
+    const q=qualtricsPanel("pre",()=>{R.consent="qualtrics";save();render();toast("Thank you for taking part.");});
+    pid.addEventListener("input",()=>{R.pid=pid.value.trim();save();q.sync();});
+    body=h("div",{class:"stack-s"},
+      h("p",{class:"muted",style:"font-size:.92rem"},"Research participants: start here. The consent form and questionnaires are in Qualtrics, about 10 minutes."),
+      h("label",{for:"h-pid",style:"font-size:.92rem"},"Study ID (from your instructor)"),pid,q.el);
+  }
+  return h("div",{class:"wk final"+(done?" done":" started"),role:"group","aria-label":"Before Week 1: pre-program survey"},
+    h("span",{class:"dot"},done?"✓":"★"),
+    h("span",{class:"body"},h("span",{class:"eyebrow"},"Before Week 1"),h("h3",{style:"margin:2px 0 6px"},"Research consent and pre-program survey"),body));
+}
 function finalStep(){
   const R=S.research, part=!!R.consent, ready=TEST_POST||weekDone(4), done=!!R.postDone;
   let body;
   if(!USE_QUALTRICS) body=h("p",{class:"muted",style:"font-size:.92rem"},"Questionnaires appear here after Week 4.");
-  else if(!part) body=h("p",{class:"muted",style:"font-size:.92rem"},"For research participants only. You chose to use the app without taking part.");
+  else if(!part) body=h("p",{class:"muted",style:"font-size:.92rem"},"For research participants only. To take part, complete the pre-program survey at the top first.");
   else if(done) body=h("p",{class:"muted",style:"font-size:.92rem"},"Completed. Thank you for taking part in the study.");
   else if(!ready) body=h("p",{class:"muted",style:"font-size:.92rem"},"Opens after you finish Week 4. The same three questionnaires as the start, about 10 minutes, in Qualtrics.");
   else body=h("div",{class:"stack-s"},h("p",{class:"muted",style:"font-size:.92rem"},"The same three questionnaires as the start, about 10 minutes, in Qualtrics."),
