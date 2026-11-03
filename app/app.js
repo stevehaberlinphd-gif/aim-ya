@@ -236,7 +236,8 @@ function render(){
   if(view.tab==="home"){
     /* The research consent / pre-survey page opens first on every visit until the pre-survey is done.
        "Continue without the survey" skips it for this visit only. */
-    if(USE_QUALTRICS&&!S.research.preDone&&!view.skipResearch) renderStudyStart();
+    if(view.complete) renderComplete();
+    else if(USE_QUALTRICS&&!S.research.preDone&&!view.skipResearch) renderStudyStart();
     else if(!S.onboarded) renderWelcome();
     else if(view.survey==="results") renderResults();
     else if(view.survey) renderSurvey(view.survey);
@@ -244,6 +245,14 @@ function render(){
   else if(view.tab==="journal") renderJournal();
   else renderAbout();
   window.scrollTo(0,0);
+}
+/* Shown once, right after the participant finishes the post-program survey. */
+function renderComplete(){
+  app.append(header(),h("div",{class:"stack",style:"text-align:center;align-items:center;padding-top:40px"},
+    h("div",{"aria-hidden":"true",style:"width:72px;height:72px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-size:2.2rem"},"✓"),
+    h("h1",{class:"beat-h"},"Congratulations!"),
+    h("p",{style:"font-family:var(--f-display);font-size:1.35rem;line-height:1.4;max-width:28ch"},"You have completed the AIM-YA program. Thank you."),
+    h("button",{class:"btn-ghost",style:"margin-top:24px",onclick:()=>{view.complete=false;render();}},"Back to the program")));
 }
 function header(){return h("div",{class:"top",style:"justify-content:flex-end"},
   h("img",{class:"logo",src:asset(VCFG.logo||"media/logo.png"),alt:"AIM-YA: AI Mindfulness for Young Adults",width:"84",height:"84"}));}
@@ -538,7 +547,7 @@ function finalStep(){
   else if(done) body=h("p",{class:"muted",style:"font-size:.92rem"},"Completed. Thank you for taking part in the study.");
   else if(!ready) body=h("p",{class:"muted",style:"font-size:.92rem"},"Opens after you finish Week 4. The same three questionnaires as the start, about 10 minutes, in Qualtrics.");
   else body=h("div",{class:"stack-s"},h("p",{class:"muted",style:"font-size:.92rem"},"The same three questionnaires as the start, about 10 minutes, in Qualtrics."),
-    qualtricsPanel("post",()=>{render();toast("Thank you for completing the study.");}).el);
+    qualtricsPanel("post",()=>{view.complete=true;render();}).el);
   return h("div",{class:"wk final"+(done?" done":ready&&part?" started":""),role:"group","aria-label":"Final step: post-program questionnaires"},
     h("span",{class:"dot"},done?"✓":"★"),
     h("span",{class:"body"},h("span",{class:"eyebrow"},"Final step"),h("h3",{style:"margin:2px 0 6px"},"Post-program questionnaires"),body));
