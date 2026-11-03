@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>AIM-YA</title>
+<link rel="icon" href="../media/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../app/app.css">
+</head>
+<body>
+<div class="wrap" id="app" aria-live="polite"></div>
+<div class="toast" id="toast" hidden></div>
+<script>
+/* This page is the same in every version folder: the folder name picks the version in ../versions.js. */
+window.AIMYA_VERSION=location.pathname.replace(/index\.html$/,"").split("/").filter(Boolean).pop();
+window.AIMYA_ROOT="../";
+</script>
+<script src="../versions.js"></script>
+<script src="../app/app.js"></script>
+</body>
+</html>

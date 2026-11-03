@@ -1,0 +1,50 @@
+# AIM-YA (AI Mindfulness for Young Adults)
+
+A 4-week program app: a pre-survey, four weeks of videos (Practice, Reflection, Lab, Check-in) with PDF worksheets, and a post-survey.
+
+## Live links
+
+| Version | Link for participants |
+|---|---|
+| Main | https://stevehaberlinphd-gif.github.io/aim-ya/ |
+| Czech | https://stevehaberlinphd-gif.github.io/aim-ya/czech/ |
+| Wesleyan 1 | https://stevehaberlinphd-gif.github.io/aim-ya/wesleyan1/ |
+
+Each version keeps its own saved progress, and sends `pid`, `phase` (pre/post) and `version` to Qualtrics.
+In every Qualtrics survey, add **Embedded Data** fields `pid`, `phase` and `version` at the top of the Survey Flow.
+
+## Add a new version (about 2 minutes, all on github.com)
+
+Pick a short name: lowercase letters, numbers and hyphens only (e.g. `chemistry`, `wesleyan2`, `student-teachers`).
+
+1. **Make its folder.** Open the `_template` folder → `index.html` → click **Copy raw file** (the copy icon).
+   Go back to the main page of the repository → **Add file → Create new file**.
+   Type the name as `chemistry/index.html` (the slash makes the folder), paste, and click **Commit changes**.
+2. **Add its settings.** Open `versions.js` → click the pencil (Edit). Copy the `wesleyan1: { ... },` block,
+   paste it just above the last `};`, change `wesleyan1` to `chemistry`, set the `name` and the two Qualtrics links,
+   and click **Commit changes**.
+
+About a minute later the new link works: `https://stevehaberlinphd-gif.github.io/aim-ya/chemistry/`
+
+## Change a version
+Edit its block in `versions.js`. Anything you leave out is copied from `main`.
+To use different videos or worksheets, upload the files (e.g. into `media/chemistry/`) and put their paths in the block:
+
+```js
+chemistry: {
+  name: "AIM-YA Chemistry",
+  qualtricsPre: "https://...",
+  qualtricsPost: "https://...",
+  worksheets: { 1: "media/chemistry/week1-worksheet.pdf" },
+  videos: { 2: { lab: "media/chemistry/week2-lab.mp4" } }
+},
+```
+
+## What's where
+- `versions.js`: all version settings (the only file you normally edit)
+- `app/`: the app itself, shared by every version
+- `media/`: logo, intro video, the 16 step videos, the 4 worksheets
+- `index.html`: the main version; each other folder (`czech/`, `wesleyan1/`...) holds one identical `index.html`
+
+## Privacy
+The site is static: no accounts and no server. Survey answers go to Qualtrics. Progress (which steps are done) is saved only in each participant's own browser.
