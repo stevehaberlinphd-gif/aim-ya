@@ -185,7 +185,7 @@ function scoreAll(ans){
 const pssBand=x=>x<=13?"low":x<=26?"moderate":"high";
 
 /* ---------------- State (saved on this device only) ---------------- */
-const KEY="aimya-"+VERSION_ID+"-v1"; /* one saved-progress slot per version, so versions never mix */
+const KEY="aimya-"+VERSION_ID+"-v2"; /* one saved-progress slot per version, so versions never mix */
 try{["aimya-companion-v1","aimya-companion-v2","aimya-companion-v3","aimya-companion-v4","aimya-companion-v5","aimya-companion-v6","aimya-companion-v7"].forEach(k=>localStorage.removeItem(k));}catch(e){}
 const blank=()=>({onboarded:false,guiding:{},check:{},check4:{},weeks:{1:{},2:{},3:{},4:{}},revisit:{},manifesto:{},
   research:{consent:null,pid:"",pre:{aias:{},pss:{},cams:{}},post:{aias:{},pss:{},cams:{}},preDone:null,postDone:null}});
@@ -234,7 +234,10 @@ function render(){
   document.querySelectorAll(".tabs button").forEach(b=>b.setAttribute("aria-current",b.dataset.tab===view.tab?"page":"false"));
   app.replaceChildren();
   if(view.tab==="home"){
-    if(!S.onboarded) renderWelcome();
+    /* The research consent / pre-survey page opens first on every visit until the pre-survey is done.
+       "Continue without the survey" skips it for this visit only. */
+    if(USE_QUALTRICS&&!S.research.preDone&&!view.skipResearch) renderStudyStart();
+    else if(!S.onboarded) renderWelcome();
     else if(view.survey==="results") renderResults();
     else if(view.survey) renderSurvey(view.survey);
     else if(view.week) renderWeek(view.week); else renderHome(); }
@@ -309,13 +312,13 @@ function qualtricsPanel(phase,onDone){
 function renderStudyStart(){
   const R=S.research;
   app.append(header());
-  const enter=()=>{S.onboarded=true;view.tab="home";view.week=null;save();render();};
+  const enter=()=>{S.onboarded=true;view.skipResearch=true;view.tab="home";view.week=null;save();render();};
   const pid=h("input",{type:"text",id:"c-pid",placeholder:"e.g., AIM-0427",autocomplete:"off"}); pid.value=R.pid||"";
   const q=qualtricsPanel("pre",()=>{R.consent="qualtrics";enter();toast("Thank you. Welcome to AIM-YA.");});
   pid.addEventListener("input",()=>{R.pid=pid.value.trim();save();q.sync();});
   app.append(h("div",{class:"stack"},
     h("p",{class:"eyebrow"},"Welcome to AIM-YA · AI Mindfulness for Young Adults"),
-    h("h1",{},"Pre-program survey"),
+    h("h1",{},"Research consent and pre-program survey"),
     h("div",{class:"panel stack"},
       h("div",{class:"stack-s"},h("label",{for:"c-pid"},"Study ID (from your instructor)"),pid),
       q.el),
