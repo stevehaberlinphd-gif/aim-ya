@@ -500,6 +500,7 @@ function renderHome(){
           h("span",{class:"dot"},weekDone(n)?"✓":String(n)),
           h("span",{class:"body"},h("span",{class:"eyebrow"},"Week "+n),h("h3",{style:"margin:2px 0 4px"},w.title),
             h("span",{class:"muted",style:"font-size:.92rem"},w.tag),
+            h("span",{class:"toolnote",style:"display:block;margin-top:6px"},"Download the PDF worksheet to have during the module activities."),
             h("span",{class:"beats","aria-hidden":"true"},BEATS.map(([b])=>h("span",{class:beatDone(n,b)?"on":""}))),
             h("span",{class:"row",style:"margin-top:12px"},
               current?h("button",{class:"btn-primary",onclick:e=>{e.stopPropagation();openWeek(n);}},"Begin session"):null,
