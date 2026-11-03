@@ -236,7 +236,8 @@ function render(){
   if(view.tab==="home"){
     /* The research consent / pre-survey page opens first on every visit until the pre-survey is done.
        "Continue without the survey" skips it for this visit only. */
-    if(view.complete) renderComplete();
+    /* TEMPORARY preview link: add ?preview=complete to any version's address to see the final page. Remove before launch. */
+    if(view.complete||new URLSearchParams(location.search).get("preview")==="complete") renderComplete();
     else if(USE_QUALTRICS&&!S.research.preDone&&!view.skipResearch) renderStudyStart();
     else if(!S.onboarded) renderWelcome();
     else if(view.survey==="results") renderResults();
@@ -252,7 +253,7 @@ function renderComplete(){
     h("div",{"aria-hidden":"true",style:"width:72px;height:72px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-size:2.2rem"},"✓"),
     h("h1",{class:"beat-h"},"Congratulations!"),
     h("p",{style:"font-family:var(--f-display);font-size:1.35rem;line-height:1.4;max-width:28ch"},"You have completed the AIM-YA program. Thank you."),
-    h("button",{class:"btn-ghost",style:"margin-top:24px",onclick:()=>{view.complete=false;render();}},"Back to the program")));
+    h("button",{class:"btn-ghost",style:"margin-top:24px",onclick:()=>{view.complete=false;if(location.search)history.replaceState(null,"",location.pathname);render();}},"Back to the program")));
 }
 function header(){return h("div",{class:"top",style:"justify-content:flex-end"},
   h("img",{class:"logo",src:asset(VCFG.logo||"media/logo.png"),alt:"AIM-YA: AI Mindfulness for Young Adults",width:"84",height:"84"}));}
