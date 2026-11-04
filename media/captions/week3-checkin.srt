@@ -1,0 +1,35 @@
+1
+00:00:00,000 --> 00:00:02,961
+Let's check in using 3 quick questions.
+
+2
+00:00:03,001 --> 00:00:07,933
+Plan: before you started the lab, what did you decide to try on your own?
+
+3
+00:00:07,973 --> 00:00:13,235
+Monitor: when you got stuck, what did you notice in your body and your thoughts?
+
+4
+00:00:13,275 --> 00:00:16,341
+Evaluate: did I think first?
+
+5
+00:00:16,381 --> 00:00:18,320
+Yes, partly,
+
+6
+00:00:18,360 --> 00:00:21,792
+or not this time, all honest answers.
+
+7
+00:00:21,832 --> 00:00:25,342
+Then count how many times you used STOP this week.
+
+8
+00:00:25,382 --> 00:00:31,121
+And one last time, rate your anxiety and curiosity about AI 0 to 10.
+
+9
+00:00:31,161 --> 00:00:35,083
+Be kind to yourself with whatever you find.

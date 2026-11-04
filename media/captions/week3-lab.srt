@@ -1,0 +1,47 @@
+1
+00:00:00,000 --> 00:00:01,853
+Choose a small problem.
+
+2
+00:00:01,893 --> 00:00:04,524
+A math question, a short writing prompt,
+
+3
+00:00:04,564 --> 00:00:06,441
+or something from a class you're taking.
+
+4
+00:00:06,481 --> 00:00:11,621
+Close your AI tool, and give it your own honest try for about 5 minutes.
+
+5
+00:00:11,661 --> 00:00:13,772
+Notice when you feel stuck.
+
+6
+00:00:13,812 --> 00:00:18,739
+That moment of struggle is where real learning happens. So, breathe through it.
+
+7
+00:00:18,779 --> 00:00:22,549
+Now open your AI tool, but don't ask for the answer.
+
+8
+00:00:22,589 --> 00:00:25,173
+Try, “Don't solve this for me.
+
+9
+00:00:25,213 --> 00:00:28,407
+Give me one hint to help me take the next step.”
+
+10
+00:00:28,447 --> 00:00:32,410
+Use the hint, keep working, and ask for only another if you need it.
+
+11
+00:00:33,478 --> 00:00:36,270
+How did that feel compared to just getting the answer?
+
+12
+00:00:37,292 --> 00:00:41,378
+Write one line on what you learned and whether it fits your charter.
