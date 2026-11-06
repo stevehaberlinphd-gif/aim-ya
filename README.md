@@ -40,6 +40,9 @@ chemistry: {
 },
 ```
 
+## After replacing a video or worksheet
+In `app/app.js`, change the date in `const MEDIA_VERSION="..."` (any new value works). This makes everyone's browser load the new files instead of old saved copies.
+
 ## What's where
 - `versions.js`: all version settings (the only file you normally edit)
 - `app/`: the app itself, shared by every version

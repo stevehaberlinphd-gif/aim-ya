@@ -6,7 +6,10 @@ const VCFG=(()=>{const all=window.AIMYA_VERSIONS||{},base=all.main||{},own=all[V
   const merge=(a,b)=>{const o=Object.assign({},a);for(const k in b){o[k]=(b[k]&&typeof b[k]==="object"&&!Array.isArray(b[k])&&a&&typeof a[k]==="object")?merge(a[k],b[k]):b[k];}return o;};
   return VERSION_ID==="main"?base:merge(base,own);})();
 const ROOT=window.AIMYA_ROOT||"";
-const asset=p=>!p?"":/^(https?:)?\/\//.test(p)||p.startsWith("/")?p:ROOT+p;
+/* MEDIA_VERSION: bump this whenever videos, worksheets or the logo are replaced, so browsers fetch the new files
+   instead of showing copies they saved earlier. */
+const MEDIA_VERSION="2026-11-06a";
+const asset=p=>!p?"":/^(https?:)?\/\//.test(p)||p.startsWith("/")?p:ROOT+p+(p.includes("?")?"&":"?")+"v="+MEDIA_VERSION;
 if(VCFG.name) document.title=VCFG.name;
 /* ---------------- Curriculum content (AIM-YA 4-week) ---------------- */
 const GUIDING = [
