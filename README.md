@@ -51,7 +51,7 @@ In `app/app.js`, change the date in `const MEDIA_VERSION="..."` (any new value w
 - `app/`: the app itself, shared by every version
 - `media/`: logo, intro video, the 16 step videos, the 4 worksheets
 - `index.html`: the main version; each other folder (`czech/`, `wesleyan1/`...) holds one identical `index.html`
-- `onboarding/`: the collaborator onboarding page (`index.html`) and its four facilitator training videos (`onboarding/media/`). The training guide and MOU form are in `onboarding/files/`; to update one, upload a new file with the same name.
+- `onboarding/`: the collaborator onboarding page (`index.html`) and its four facilitator training videos (`onboarding/media/`). The training guide and MOU form are in `onboarding/files/`; to update one, upload it with a new name (e.g. `-v3`) and change its link in `onboarding/index.html`, so no one gets an old cached copy.
 
 ## Privacy
 The site is static: no accounts and no server. Survey answers go to Qualtrics. Progress (which steps are done) is saved only in each participant's own browser.
