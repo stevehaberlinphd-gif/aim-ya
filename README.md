@@ -10,6 +10,9 @@ A 4-week program app: a pre-survey, four weeks of videos (Practice, Reflection, 
 | Czech | https://stevehaberlinphd-gif.github.io/aim-ya/czech/ |
 | Wesleyan 1 | https://stevehaberlinphd-gif.github.io/aim-ya/wesleyan1/ |
 
+**Collaborator onboarding page** (for partner sites and facilitators, not students):
+https://stevehaberlinphd-gif.github.io/aim-ya/onboarding/
+
 Each version keeps its own saved progress, and sends `pid`, `phase` (pre/post) and `version` to Qualtrics.
 In every Qualtrics survey, add **Embedded Data** fields `pid`, `phase` and `version` at the top of the Survey Flow.
 
@@ -48,6 +51,7 @@ In `app/app.js`, change the date in `const MEDIA_VERSION="..."` (any new value w
 - `app/`: the app itself, shared by every version
 - `media/`: logo, intro video, the 16 step videos, the 4 worksheets
 - `index.html`: the main version; each other folder (`czech/`, `wesleyan1/`...) holds one identical `index.html`
+- `onboarding/`: the collaborator onboarding page (`index.html`) and its four facilitator training videos (`onboarding/media/`). The training guide PDF and MOU form download from Google Drive.
 
 ## Privacy
 The site is static: no accounts and no server. Survey answers go to Qualtrics. Progress (which steps are done) is saved only in each participant's own browser.
