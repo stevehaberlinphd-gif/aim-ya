@@ -48,4 +48,22 @@ window.AIMYA_VERSIONS = {
     qualtricsPost: ""    // paste the Wesleyan post-survey link here
   },
 
+  peak: {
+    name: "AIM-YA Peak",
+    qualtricsPre:  "",   // paste the Peak pre-survey link here
+    qualtricsPost: "",   // paste the Peak post-survey link here
+    // Practice step uses the Peak Mind app ("Pushups for the Mind") instead of the AIM-YA practice videos.
+    // Reflection, Lab, Check-in, worksheets and surveys stay the same as main.
+    externalPractice: {
+      app: "Pushups for the Mind (Peak Mind)",
+      link: "https://peakmind.media/",          // replace with the app's download or access link when available
+      linkLabel: "Open Pushups for the Mind",
+      sessions: 4,
+      minutes: 12,
+      weekText: { 1: "Core Program, Week 1", 2: "Core Program, Week 2", 3: "Core Program, Week 3", 4: "Core Program, Week 4" },
+      intro: "These Peak Mind practices are your mindfulness foundation. They train your attention, and the rest of each week (Reflection, Lab and Check-in) helps you bring that attention to AI and to the anxiety it can stir up.",
+      note: "Can't open the app? Ask your instructor how to get access."
+    }
+  },
+
 };

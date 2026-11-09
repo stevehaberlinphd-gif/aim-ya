@@ -9,6 +9,7 @@ A 4-week program app: a pre-survey, four weeks of videos (Practice, Reflection, 
 | Main | https://stevehaberlinphd-gif.github.io/aim-ya/ |
 | Czech | https://stevehaberlinphd-gif.github.io/aim-ya/czech/ |
 | Wesleyan 1 | https://stevehaberlinphd-gif.github.io/aim-ya/wesleyan1/ |
+| Peak (Peak Mind practices) | https://stevehaberlinphd-gif.github.io/aim-ya/peak/ |
 
 **Pilot partner landing page** (public recruiting page with the readiness check and updates sign-up):
 https://stevehaberlinphd-gif.github.io/aim-ya/pilot/

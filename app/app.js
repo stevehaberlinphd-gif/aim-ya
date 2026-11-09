@@ -8,7 +8,7 @@ const VCFG=(()=>{const all=window.AIMYA_VERSIONS||{},base=all.main||{},own=all[V
 const ROOT=window.AIMYA_ROOT||"";
 /* MEDIA_VERSION: bump this whenever videos, worksheets or the logo are replaced, so browsers fetch the new files
    instead of showing copies they saved earlier. */
-const MEDIA_VERSION="2026-11-06a";
+const MEDIA_VERSION="2026-11-09a";
 const asset=p=>!p?"":/^(https?:)?\/\//.test(p)||p.startsWith("/")?p:ROOT+p+(p.includes("?")?"&":"?")+"v="+MEDIA_VERSION;
 if(VCFG.name) document.title=VCFG.name;
 /* ---------------- Curriculum content (AIM-YA 4-week) ---------------- */
@@ -249,6 +249,28 @@ function render(){
   else if(view.tab==="journal") renderJournal();
   else renderAbout();
   window.scrollTo(0,0);
+}
+/* Practice step for versions that use an outside app (versions.js: externalPractice) instead of the AIM-YA practice videos.
+   Students tick off each session; ticking any session counts the Practice step as started. */
+function externalPractice(n){
+  const X=VCFG.externalPractice, st=W(n), days=st.extDays||(st.extDays={});
+  const total=X.sessions||4, title=(X.weekText&&X.weekText[n])||`Core Program, Week ${n}`;
+  const count=h("p",{class:"toolnote"});
+  const upd=()=>{const k=Object.values(days).filter(Boolean).length;count.textContent=`${k} of ${total} sessions done this week`;};
+  const boxes=h("div",{class:"stack-s"},Array.from({length:total},(_,i)=>{
+    const id=`ext-${n}-${i+1}`, cb=h("input",{type:"checkbox",id});
+    cb.checked=!!days[i+1];
+    cb.addEventListener("change",()=>{days[i+1]=cb.checked;if(cb.checked)st.practiced=true;save();upd();});
+    return h("label",{class:"consent-row",for:id},cb,h("span",{},`Session ${i+1}${X.minutes?` · ${X.minutes} minutes`:""}`));}));
+  upd();
+  return h("div",{class:"panel stack"},
+    h("p",{class:"eyebrow"},"This week's mindfulness practice"),
+    h("h2",{},title),
+    X.intro?h("p",{class:"muted"},X.intro):null,
+    h("p",{},X.instructions||`This week, your practice happens in the ${X.app} app: ${total} guided sessions of about ${X.minutes} minutes each, on ${total} different days. Use the app's ${title}.`),
+    X.link?h("a",{class:"btn btn-primary qbtn",href:X.link,target:"_blank",rel:"noopener",style:"align-self:flex-start"},X.linkLabel||`Open ${X.app}`):null,
+    h("div",{class:"stack-s"},h("label",{},"Track your sessions"),boxes,count),
+    X.note?h("p",{class:"toolnote"},X.note):null);
 }
 /* Shown once, right after the participant finishes the post-program survey. */
 function renderComplete(){
@@ -579,6 +601,7 @@ function renderWeek(n){
      The earlier in-app activities (practiceBeat, reflectionBeat, labBeat, checkinBeat) are kept below, unused. */
   const cfg=({practice:PRACTICE_VIDEO,reflection:REFLECTION_VIDEO,lab:LAB_VIDEO,checkin:CHECKIN_VIDEO})[view.beat][n];
   const st=W(n);
+  if(view.beat==="practice"&&VCFG.externalPractice){ body.append(externalPractice(n), nextBtn(n)); return; }
   body.append(stepVideo(cfg,view.beat==="practice"?()=>{st.practiced=true;save();}:null), nextBtn(n));
 }
 function nextBtn(n,label="Continue"){
