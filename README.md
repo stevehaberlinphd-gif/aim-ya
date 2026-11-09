@@ -20,6 +20,9 @@ https://stevehaberlinphd-gif.github.io/aim-ya/onboarding/
 Each version keeps its own saved progress, and sends `pid`, `phase` (pre/post) and `version` to Qualtrics.
 In every Qualtrics survey, add **Embedded Data** fields `pid`, `phase` and `version` at the top of the Survey Flow.
 
+### Peak version: practice tracking
+The Peak post-survey link also sends `practice_w1` … `practice_w4` and `practice_total` (Peak Mind sessions ticked off each week). Add these as Embedded Data fields in the Peak post-survey to record them.
+
 ## Add a new version (about 2 minutes, all on github.com)
 
 Pick a short name: lowercase letters, numbers and hyphens only (e.g. `chemistry`, `wesleyan2`, `student-teachers`).

@@ -62,7 +62,24 @@ window.AIMYA_VERSIONS = {
       minutes: 12,
       weekText: { 1: "Core Program, Week 1", 2: "Core Program, Week 2", 3: "Core Program, Week 3", 4: "Core Program, Week 4" },
       intro: "These Peak Mind practices are your mindfulness foundation. They train your attention, and the rest of each week (Reflection, Lab and Check-in) helps you bring that attention to AI and to the anxiety it can stir up.",
-      note: "Can't open the app? Ask your instructor how to get access."
+      note: "Can't open the app? Ask your instructor how to get access.",
+      // Each week pairs the Peak Mind attention skill with that week's AIM-YA theme.
+      // EDIT the "skill" lines to match what each Core Program week actually teaches.
+      weeks: {
+        1: { skill: "Focus. Notice where your attention is, and bring it back when it wanders.",
+             ai:    "Notice what AI stirs in you (curiosity, worry, irritation) and come back to the present instead of being swept along.",
+             bridge:"After this week's sessions, take one minute: Where did your attention go during practice? Where does it go when you open an AI tool?" },
+        2: { skill: "Catching mind-wandering early, before it pulls you away.",
+             ai:    "Catch the urge to reach for AI or your phone, and check what's really behind an AI answer before trusting it.",
+             bridge:"Take one minute: When did you notice your mind had wandered this week? When did you notice the pull to reach for AI?" },
+        3: { skill: "Watching your thoughts without following each one.",
+             ai:    "Pause before you open AI (STOP), and think first, so AI supports your learning instead of replacing it.",
+             bridge:"Take one minute: What did you notice in the moment just before you opened an AI tool this week?" },
+        4: { skill: "Kindness and connection toward yourself and others.",
+             ai:    "Meet uncertainty about AI and your future with kindness, and act on what you value.",
+             bridge:"Take one minute: How has four weeks of practice changed the way you relate to AI?" }
+      },
+      bridge: "Take one minute: Where did your attention go during practice? Where does it go when you use AI?"
     }
   },
 

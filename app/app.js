@@ -8,7 +8,7 @@ const VCFG=(()=>{const all=window.AIMYA_VERSIONS||{},base=all.main||{},own=all[V
 const ROOT=window.AIMYA_ROOT||"";
 /* MEDIA_VERSION: bump this whenever videos, worksheets or the logo are replaced, so browsers fetch the new files
    instead of showing copies they saved earlier. */
-const MEDIA_VERSION="2026-11-09a";
+const MEDIA_VERSION="2026-11-09b";
 const asset=p=>!p?"":/^(https?:)?\/\//.test(p)||p.startsWith("/")?p:ROOT+p+(p.includes("?")?"&":"?")+"v="+MEDIA_VERSION;
 if(VCFG.name) document.title=VCFG.name;
 /* ---------------- Curriculum content (AIM-YA 4-week) ---------------- */
@@ -115,7 +115,8 @@ function loadAudio(src){
    (blank values) at the top of the Survey Flow so they are captured with each response. */
 const QUALTRICS={ pre:VCFG.qualtricsPre||"", post:VCFG.qualtricsPost||"" };
 const USE_QUALTRICS=true;   /* false = use the built-in consent page and questionnaires below instead */
-const qLink=(phase,pid)=>{const u=QUALTRICS[phase];if(!u)return"";return u+(u.includes("?")?"&":"?")+"pid="+encodeURIComponent(pid)+"&phase="+phase+"&version="+encodeURIComponent(VERSION_ID);};
+const practiceParams=()=>{if(!VCFG.externalPractice)return"";let t=0,q="";for(const n of [1,2,3,4]){const d=(S.weeks[n]&&S.weeks[n].extDays)||{};const k=Object.values(d).filter(Boolean).length;t+=k;q+="&practice_w"+n+"="+k;}return q+"&practice_total="+t;};
+const qLink=(phase,pid)=>{const u=QUALTRICS[phase];if(!u)return"";return u+(u.includes("?")?"&":"?")+"pid="+encodeURIComponent(pid)+"&phase="+phase+"&version="+encodeURIComponent(VERSION_ID)+(phase==="post"?practiceParams():"");};
 
 /* ---------------- Research instruments (built-in fallback, used when USE_QUALTRICS is false) ----------------
    AIAS item text: paste the exact wording from Wang & Wang (2019) into each `text` below.
@@ -268,8 +269,13 @@ function externalPractice(n){
     h("h2",{},title),
     X.intro?h("p",{class:"muted"},X.intro):null,
     h("p",{},X.instructions||`This week, your practice happens in the ${X.app} app: ${total} guided sessions of about ${X.minutes} minutes each, on ${total} different days. Use the app's ${title}.`),
+    (X.weeks&&X.weeks[n])?h("div",{class:"quiet stack-s"},
+      h("p",{class:"eyebrow"},"This week's link"),
+      h("p",{},h("strong",{},"Attention skill: "),X.weeks[n].skill),
+      h("p",{},h("strong",{},"Bringing it to AI: "),X.weeks[n].ai)):null,
     X.link?h("a",{class:"btn btn-primary qbtn",href:X.link,target:"_blank",rel:"noopener",style:"align-self:flex-start"},X.linkLabel||`Open ${X.app}`):null,
     h("div",{class:"stack-s"},h("label",{},"Track your sessions"),boxes,count),
+    X.bridge?h("div",{class:"ethics"},h("p",{class:"eyebrow"},"One-minute bridge"),h("p",{},(X.weeks&&X.weeks[n]&&X.weeks[n].bridge)||X.bridge)):null,
     X.note?h("p",{class:"toolnote"},X.note):null);
 }
 /* Shown once, right after the participant finishes the post-program survey. */
