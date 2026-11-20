@@ -83,4 +83,31 @@ window.AIMYA_VERSIONS = {
     }
   },
 
+  teen: {
+    name: "AIM-YA Teen",
+    qualtricsPre:  "",   // paste the teen pre-survey (student assent) link here
+    qualtricsPost: "",   // paste the teen post-survey link here
+    // Videos and worksheets are the same as main for now; point to teen versions here when they're recorded, e.g.
+    // videos: { 1: { practice: "media/teen/week1-practice.mp4" } },  worksheets: { 1: "media/teen/week1-worksheet.pdf" },
+    text: {
+      welcome: "Welcome to AIM-YA Teen · AI Mindfulness for Teens",
+      landingTitle: "Before you start: the research survey",
+      landingNote: "This program is part of a research study. Your teacher will give you a Study ID once your parent or guardian has returned the permission form. No form yet? You can still do the whole program; just skip the survey for now.",
+      studyIdLabel: "Study ID (from your teacher)",
+      skipSurvey: "Start the program without the survey",
+      question: "How do you stay yourself, and stay present, in a world full of AI?"
+    },
+    weekText: {
+      1: { title: "Arriving", tag: "Notice what AI stirs in you, from your feed to your friendships" },
+      2: { title: "Seeing clearly", tag: "Who's behind the AI, and can you trust what it shows you?" },
+      3: { title: "Learning with, not through", tag: "Homework, AI, and doing your own thinking" },
+      4: { title: "Future self", tag: "College, careers, and what stays human" }
+    },
+    stepNotes: {
+      practice: "Short on time in class? It's okay to do just part of the practice. Even 3 minutes counts.",
+      lab: "Use only the AI tool your school allows, or follow along as your teacher runs the lab for the class. Never put personal information (your name, school, photos) into an AI tool."
+    },
+    support: "Feeling stressed or overwhelmed? Talk to your school counselor or another trusted adult. If you're in crisis, call or text 988 (Suicide & Crisis Lifeline), any time."
+  },
+
 };

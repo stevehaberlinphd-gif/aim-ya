@@ -8,7 +8,7 @@ const VCFG=(()=>{const all=window.AIMYA_VERSIONS||{},base=all.main||{},own=all[V
 const ROOT=window.AIMYA_ROOT||"";
 /* MEDIA_VERSION: bump this whenever videos, worksheets or the logo are replaced, so browsers fetch the new files
    instead of showing copies they saved earlier. */
-const MEDIA_VERSION="2026-11-09b";
+const MEDIA_VERSION="2026-11-20a";
 const asset=p=>!p?"":/^(https?:)?\/\//.test(p)||p.startsWith("/")?p:ROOT+p+(p.includes("?")?"&":"?")+"v="+MEDIA_VERSION;
 if(VCFG.name) document.title=VCFG.name;
 /* ---------------- Curriculum content (AIM-YA 4-week) ---------------- */
@@ -59,6 +59,9 @@ const WEEKS = {
       steps:["Copy the prompt below. It includes the values and strengths from your reflection.","Read what the AI suggests about career paths and how AI may change them.","Write down what it got right and what it missed about you."]},
     checkin:{name:"Looking back at Week 1",desc:"Compare with your Week 1 map: what changed, and what you'll keep practicing."}}
 };
+/* Per-version wording (versions.js): text.* for screen wording, weekText for week titles and taglines. */
+const TXT=(k,d)=>((VCFG.text||{})[k])||d;
+for(const n of [1,2,3,4]){const o=(VCFG.weekText||{})[n]; if(o){ if(o.title)WEEKS[n].title=o.title; if(o.tag)WEEKS[n].tag=o.tag; }}
 const FEELINGS=["Curious","Anxious","Angry","Hopeful","Nothing"];
 const MAP_PLACES=[["study","Studying and coursework"],["work","Work or job search"],["daily","Daily life and social media"]];
 /* The AI-use ladder, matching the Week 3 student worksheet (levels 0–4). */
@@ -327,7 +330,7 @@ function renderConsent(){
       sec("Your choice","Taking part in the research is voluntary. Saying no will not affect your grade or your access to the program. You can skip the study, or stop at any time."),
       sec("Privacy","Your answers are linked to a study ID, not your name. [Describe storage, access, retention, and de-identification as approved by the IRB.]"),
       sec("Questions","[Principal investigator name and contact] · [IRB contact and study number]")),
-    h("div",{class:"stack-s"},h("label",{for:"c-pid"},"Study ID (from your instructor)"),pid),
+    h("div",{class:"stack-s"},h("label",{for:"c-pid"},TXT("studyIdLabel","Study ID (from your instructor)")),pid),
     h("label",{class:"consent-row",for:"c-age"},age,h("span",{},"I am 18 years of age or older.")),
     h("label",{class:"consent-row",for:"c-agree"},agree,h("span",{},"I have read the information above and agree to take part in this research.")),
     h("div",{class:"row"},go,h("button",{class:"btn-ghost",onclick:()=>{R.consent=false;R.consentAt=new Date().toISOString();save();render();}},"Use the app without taking part"))));
@@ -358,12 +361,13 @@ function renderStudyStart(){
   const q=qualtricsPanel("pre",()=>{R.consent="qualtrics";enter();toast("Thank you. Welcome to AIM-YA.");});
   pid.addEventListener("input",()=>{R.pid=pid.value.trim();save();q.sync();});
   app.append(h("div",{class:"stack"},
-    h("p",{class:"eyebrow"},"Welcome to AIM-YA · AI Mindfulness for Young Adults"),
-    h("h1",{},"Research consent and pre-program survey"),
+    h("p",{class:"eyebrow"},TXT("welcome","Welcome to AIM-YA · AI Mindfulness for Young Adults")),
+    h("h1",{},TXT("landingTitle","Research consent and pre-program survey")),
+    TXT("landingNote","")?h("p",{class:"muted"},TXT("landingNote","")):null,
     h("div",{class:"panel stack"},
-      h("div",{class:"stack-s"},h("label",{for:"c-pid"},"Study ID (from your instructor)"),pid),
+      h("div",{class:"stack-s"},h("label",{for:"c-pid"},TXT("studyIdLabel","Study ID (from your instructor)")),pid),
       q.el),
-    h("div",{class:"row"},h("button",{class:"btn-ghost",onclick:()=>{if(R.consent==null){R.consent=false;R.consentAt=new Date().toISOString();}enter();}},"Continue to the program without the survey")),
+    h("div",{class:"row"},h("button",{class:"btn-ghost",onclick:()=>{if(R.consent==null){R.consent=false;R.consentAt=new Date().toISOString();}enter();}},TXT("skipSurvey","Continue to the program without the survey"))),
     TEST_POST?h("div",{class:"notice stack-s"},h("strong",{},"Testing only"),
       h("button",{class:"btn-sm",onclick:()=>{R.pid=R.pid||"TEST-01";R.consent="qualtrics";R.postDone=null;enter();
         setTimeout(()=>{const f=document.querySelector(".wk.final");if(f)f.scrollIntoView({behavior:"smooth",block:"center"});},50);}},"Skip to the final step (post-survey)")):null));
@@ -531,7 +535,7 @@ function renderHome(){
   const next=[1,2,3,4].find(n=>!weekDone(n));
   app.append(header(),
     h("div",{class:"stack"},
-      h("p",{class:"question"},"What does it mean to be a thoughtful, present human in an AI-saturated world?"),
+      h("p",{class:"question"},TXT("question","What does it mean to be a thoughtful, present human in an AI-saturated world?")),
       introVideo(),
       h("h2",{class:"glance-h"},"Program at a Glance"),
       h("div",{class:"path"},firstStep(),[1,2,3,4].map(n=>{
@@ -547,7 +551,8 @@ function renderHome(){
               current?h("button",{class:"btn-primary",onclick:e=>{e.stopPropagation();openWeek(n);}},"Begin session"):null,
               worksheetBtn(n))));
         return card;
-      }), finalStep())
+      }), finalStep()),
+      supportLine()
     ));
 }
 /* Final step on the path: post-program questionnaires (Qualtrics) */
@@ -565,7 +570,7 @@ function firstStep(){
     pid.addEventListener("input",()=>{R.pid=pid.value.trim();save();q.sync();});
     body=h("div",{class:"stack-s"},
       h("p",{class:"muted",style:"font-size:.92rem"},"Research participants: start here. The consent form and questionnaires are in Qualtrics, about 10 minutes."),
-      h("label",{for:"h-pid",style:"font-size:.92rem"},"Study ID (from your instructor)"),pid,q.el);
+      h("label",{for:"h-pid",style:"font-size:.92rem"},TXT("studyIdLabel","Study ID (from your instructor)")),pid,q.el);
   }
   return h("div",{class:"wk final"+(done?" done":" started"),role:"group","aria-label":"Before Week 1: pre-program survey"},
     h("span",{class:"dot"},done?"✓":"★"),
@@ -608,8 +613,13 @@ function renderWeek(n){
   const cfg=({practice:PRACTICE_VIDEO,reflection:REFLECTION_VIDEO,lab:LAB_VIDEO,checkin:CHECKIN_VIDEO})[view.beat][n];
   const st=W(n);
   if(view.beat==="practice"&&VCFG.externalPractice){ body.append(externalPractice(n), nextBtn(n)); return; }
-  body.append(stepVideo(cfg,view.beat==="practice"?()=>{st.practiced=true;save();}:null), nextBtn(n));
+  const note=((VCFG.stepNotes||{})[view.beat]);
+  body.append(...[stepVideo(cfg,view.beat==="practice"?()=>{st.practiced=true;save();}:null),
+    note?h("div",{class:"quiet"},h("p",{},typeof note==="object"?(note[n]||note.all||""):note)):null,
+    view.beat==="checkin"?supportLine():null, nextBtn(n)].filter(Boolean));
 }
+/* Optional support line (versions.js: support), shown on the home page and every Check-in. */
+function supportLine(){return VCFG.support?h("p",{class:"notice"},VCFG.support):null;}
 function nextBtn(n,label="Continue"){
   const i=BEATS.findIndex(([b])=>b===view.beat);
   const nb=BEATS[i+1];

@@ -10,6 +10,7 @@ A 4-week program app: a pre-survey, four weeks of videos (Practice, Reflection, 
 | Czech | https://stevehaberlinphd-gif.github.io/aim-ya/czech/ |
 | Wesleyan 1 | https://stevehaberlinphd-gif.github.io/aim-ya/wesleyan1/ |
 | Peak (Peak Mind practices) | https://stevehaberlinphd-gif.github.io/aim-ya/peak/ |
+| Teen (high school) | https://stevehaberlinphd-gif.github.io/aim-ya/teen/ |
 
 **Pilot partner landing page** (public recruiting page with the readiness check and updates sign-up):
 https://stevehaberlinphd-gif.github.io/aim-ya/pilot/
@@ -52,6 +53,11 @@ chemistry: {
 
 ## After replacing a video or worksheet
 In `app/app.js`, change the date in `const MEDIA_VERSION="..."` (any new value works). This makes everyone's browser load the new files instead of old saved copies.
+
+## Change the wording of a version
+A version's block can also set `text` (first-page wording and the home-page question), `weekText` (week titles and taglines),
+`stepNotes` (a short note under the Practice/Reflection/Lab/Check-in video) and `support` (a help line on the home page and every Check-in).
+See the `teen` block in `versions.js` for an example.
 
 ## What's where
 - `versions.js`: all version settings (the only file you normally edit)
